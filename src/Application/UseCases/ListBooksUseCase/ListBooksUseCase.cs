@@ -23,7 +23,7 @@ namespace Application.UseCases.ListBooksUseCase
         {
             try
             {
-                var listBooks = CreateBooksChain();
+                var listBooks = CreateBooksSearchChain();
                 return new Output<BooksListDTO>(await listBooks.Handle(input, cancellationToken));
             }
             catch (Exception ex)
