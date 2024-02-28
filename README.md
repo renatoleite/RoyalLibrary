@@ -10,8 +10,6 @@ To run the application first is necessary to run the docker-compose command usin
 docker compose up -d
 ```
 
-Each time the application is started, a standard user and some cars are created.
-
 ## Run the app
 
 You can run the application through Visual Studio and the URL created by Docker
