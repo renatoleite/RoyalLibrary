@@ -1,0 +1,2 @@
+﻿GO
+DROP TABLE books
