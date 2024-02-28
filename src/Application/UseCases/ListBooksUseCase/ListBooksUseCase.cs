@@ -33,7 +33,7 @@ namespace Application.UseCases.ListBooksUseCase
             }
         }
 
-        private IHandler CreateBooksChain()
+        private IHandler CreateBooksSearchChain()
         {
             var listBooks = new ListBooksByAuthor(_booksRepository);
 
