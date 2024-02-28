@@ -61,17 +61,17 @@ namespace WebApi.Controllers
             }
         }
 
-        [HttpGet("users/{userId}/owned")]
-        public async Task<IActionResult> ListOwnedBooksByUser(int userId, int page, int items, CancellationToken cancellationToken)
+        [HttpGet("category/{category}")]
+        public async Task<IActionResult> ListBooksByCategory(string category, int page, int items, CancellationToken cancellationToken)
         {
             try
             {
                 var result = await _useCase.ExecuteAsync(new ListBooksInput
                 {
-                    UserId = userId,
+                    Term = category,
                     Items = items,
                     Page = page,
-                    Operation = Operation.ListOwnedBooksByUserId
+                    Operation = Operation.ListBooksByCategory
                 }, cancellationToken);
 
                 if (result == null)
@@ -85,17 +85,17 @@ namespace WebApi.Controllers
             }
         }
 
-        [HttpGet("users/{userId}/loved")]
-        public async Task<IActionResult> ListLovedBooksByUser(int userId, int page, int items, CancellationToken cancellationToken)
+        [HttpGet("title/{title}")]
+        public async Task<IActionResult> ListBooksByTitle(string title, int page, int items, CancellationToken cancellationToken)
         {
             try
             {
                 var result = await _useCase.ExecuteAsync(new ListBooksInput
                 {
-                    UserId = userId,
+                    Term = title,
                     Items = items,
                     Page = page,
-                    Operation = Operation.ListLovedBooksByUserId
+                    Operation = Operation.ListBooksByTitle
                 }, cancellationToken);
 
                 if (result == null)
@@ -110,17 +110,17 @@ namespace WebApi.Controllers
         }
 
 
-        [HttpGet("users/{userId}/want-read")]
-        public async Task<IActionResult> ListWantToReadBooksByUser(int userId, int page, int items, CancellationToken cancellationToken)
+        [HttpGet("type/{type}")]
+        public async Task<IActionResult> ListBooksByType(string type, int page, int items, CancellationToken cancellationToken)
         {
             try
             {
                 var result = await _useCase.ExecuteAsync(new ListBooksInput
                 {
-                    UserId = userId,
+                    Term = type,
                     Items = items,
                     Page = page,
-                    Operation = Operation.ListWantToReadBooksByUserId
+                    Operation = Operation.ListBooksByType
                 }, cancellationToken);
 
                 if (result == null)

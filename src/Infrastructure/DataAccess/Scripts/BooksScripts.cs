@@ -4,17 +4,17 @@
     {
         private const string QueryBooksColumn = @"
 			SELECT
-				b.book_id,
+				book_id,
 				title,
 				first_name as FirstName,
 				last_name as LastName,
 				total_copies as TotalCopies,
 				copies_in_use as CopiesInUse,
-				[type],
+				type,
 				isbn,
 				category
 			FROM
-				dbo.books b";
+				dbo.books";
 
         private const string QueryPagination = @$"
 			OFFSET @page ROWS
@@ -22,9 +22,9 @@
 
         public const string QueryTotalBooks = $@"
 			SELECT
-				count(b.book_id)
+				count(book_id)
 			FROM
-				dbo.books b";
+				dbo.books";
 
         public const string QueryListBooksByAuthor =
             $@"{QueryBooksColumn}
@@ -41,30 +41,25 @@
 					ORDER BY book_id
 				{QueryPagination}";
 
-        public const string QueryListOwnedBooksByUserId =
+        public const string QueryListBooksByTitle =
             $@"{QueryBooksColumn}
-				INNER JOIN user_books ub on ub.book_id = b.book_id
 				WHERE
-					ub.user_id = @userId and
-					ub.own = 1
+					title LIKE @title
 				ORDER BY book_id
 				{QueryPagination}";
 
-        public const string QueryListLovedBooksByUserId =
+        public const string QueryListBooksByType =
             $@"{QueryBooksColumn}
-				INNER JOIN user_books ub on ub.book_id = b.book_id
 				WHERE
-					ub.user_id = @userId and
-					ub.love = 1
+					type LIKE @type
 				ORDER BY book_id
 				{QueryPagination}";
 
-        public const string QueryListWantToReadBooksByUserId =
+        public const string QueryListBooksByCategory =
             $@"{QueryBooksColumn}
-				INNER JOIN user_books ub on ub.book_id = b.book_id
 				WHERE
-					ub.user_id = @userId and
-					ub.want_to_read = 1
+					category LIKE @category
+				ORDER BY book_id
 				{QueryPagination}";
     }
 }

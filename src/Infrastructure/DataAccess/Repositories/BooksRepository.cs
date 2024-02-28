@@ -1,5 +1,4 @@
-﻿using Domain;
-using Domain.Dtos;
+﻿using Domain.Dtos;
 using Domain.Entities;
 using Domain.Interfaces.Repositories;
 using Infrastructure.DataAccess.Scripts;
@@ -18,7 +17,7 @@ namespace Infrastructure.DataAccess.Repositories
 
         public async Task<BooksListDTO> ListBooksByAuthor(string authorNameOrLastName, int page, int items, CancellationToken cancellationToken)
         {
-            var books = await _dbConnectionWrapper.QuerySingleAsync<IEnumerable<Book>>(
+            var books = await _dbConnectionWrapper.QueryAsync<Book>(
                 BooksScripts.QueryListBooksByAuthor,
                 new
                 {
@@ -34,7 +33,7 @@ namespace Infrastructure.DataAccess.Repositories
 
         public async Task<BooksListDTO> ListBooksByISBN(string isbnCode, int page, int items, CancellationToken cancellationToken)
         {
-            var books = await _dbConnectionWrapper.QuerySingleAsync<IEnumerable<Book>>(
+            var books = await _dbConnectionWrapper.QueryAsync<Book>(
                 BooksScripts.QueryListBooksByISBN,
                 new
                 {
@@ -48,11 +47,11 @@ namespace Infrastructure.DataAccess.Repositories
             return new BooksListDTO(total, books);
         }
 
-        public async Task<BooksListDTO> ListOwnedBooksByUserId(int userId, int page, int items, CancellationToken cancellationToken)
+        public async Task<BooksListDTO> ListBooksByTitle(string title, int page, int items, CancellationToken cancellationToken)
         {
-            var books = await _dbConnectionWrapper.QuerySingleAsync<IEnumerable<Book>>(
-                BooksScripts.QueryListOwnedBooksByUserId,
-                new { userId, items, page = CalculatePagination(page, items) },
+            var books = await _dbConnectionWrapper.QueryAsync<Book>(
+                BooksScripts.QueryListBooksByTitle,
+                new { title = $"%{title}%", items, page = CalculatePagination(page, items) },
                 cancellationToken);
 
             var total = await _dbConnectionWrapper.QuerySingleOrDefaultAsync<int>(
@@ -61,11 +60,11 @@ namespace Infrastructure.DataAccess.Repositories
             return new BooksListDTO(total, books);
         }
 
-        public async Task<BooksListDTO> ListLovedBooksByUserId(int userId, int page, int items, CancellationToken cancellationToken)
+        public async Task<BooksListDTO> ListBooksByType(string type, int page, int items, CancellationToken cancellationToken)
         {
-            var books = await _dbConnectionWrapper.QuerySingleAsync<IEnumerable<Book>>(
-                BooksScripts.QueryListLovedBooksByUserId,
-                new { userId, items, page = CalculatePagination(page, items) },
+            var books = await _dbConnectionWrapper.QueryAsync<Book>(
+                BooksScripts.QueryListBooksByType,
+                new { type = $"%{type}%", items, page = CalculatePagination(page, items) },
                 cancellationToken);
 
             var total = await _dbConnectionWrapper.QuerySingleOrDefaultAsync<int>(
@@ -74,11 +73,11 @@ namespace Infrastructure.DataAccess.Repositories
             return new BooksListDTO(total, books);
         }
 
-        public async Task<BooksListDTO> ListWantToReadBooksByUserId(int userId, int page, int items, CancellationToken cancellationToken)
+        public async Task<BooksListDTO> ListBooksByCategory(string category, int page, int items, CancellationToken cancellationToken)
         {
-            var books = await _dbConnectionWrapper.QuerySingleAsync<IEnumerable<Book>>(
-                BooksScripts.QueryListWantToReadBooksByUserId,
-                new { userId, items, page = CalculatePagination(page, items) },
+            var books = await _dbConnectionWrapper.QueryAsync<Book>(
+                BooksScripts.QueryListBooksByCategory,
+                new { category = $"%{category}%", items, page = CalculatePagination(page, items) },
                 cancellationToken);
 
             var total = await _dbConnectionWrapper.QuerySingleOrDefaultAsync<int>(

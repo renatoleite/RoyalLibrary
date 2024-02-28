@@ -4,8 +4,8 @@
     {
         ListBooksByAuthor,
         ListBooksByISBN,
-        ListOwnedBooksByUserId,
-        ListLovedBooksByUserId,
-        ListWantToReadBooksByUserId
+        ListBooksByCategory,
+        ListBooksByTitle,
+        ListBooksByType
     }
 }

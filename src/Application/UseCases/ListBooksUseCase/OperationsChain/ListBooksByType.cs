@@ -5,16 +5,16 @@ using Domain.Interfaces.Repositories;
 
 namespace Application.UseCases.ListBooksUseCase.OperationsChain
 {
-    public class ListOwnedBooksByUser : AbstractHandler
+    public class ListBooksByType : AbstractHandler
     {
-        public ListOwnedBooksByUser(IBooksRepository booksRepository) : base(booksRepository)
+        public ListBooksByType(IBooksRepository booksRepository) : base(booksRepository)
         {
         }
 
         public async override Task<BooksListDTO> Handle(ListBooksInput request, CancellationToken cancellationToken)
         {
-            if (request.Operation == Operation.ListOwnedBooksByUserId)
-                return await _booksRepository.ListOwnedBooksByUserId(request.UserId, request.Page, request.Items, cancellationToken);
+            if (request.Operation == Operation.ListBooksByType)
+                return await _booksRepository.ListBooksByType(request.Term, request.Page, request.Items, cancellationToken);
 
             return await base.Handle(request, cancellationToken);
         }

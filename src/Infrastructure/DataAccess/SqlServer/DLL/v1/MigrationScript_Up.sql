@@ -1,4 +1,10 @@
-﻿GO
+﻿USE [SQL_ROYAL_LIBRARY]
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+
+GO
 create table books (
   book_id INT PRIMARY KEY IDENTITY (1, 1),
   title Varchar(100) not null,

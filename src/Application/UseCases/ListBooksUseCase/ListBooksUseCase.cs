@@ -39,9 +39,9 @@ namespace Application.UseCases.ListBooksUseCase
 
             listBooks
                 .SetNext(new ListBooksByISBN(_booksRepository))
-                .SetNext(new ListLovedBooksByUser(_booksRepository))
-                .SetNext(new ListOwnedBooksByUser(_booksRepository))
-                .SetNext(new ListWantToReadBooksByUser(_booksRepository));
+                .SetNext(new ListBooksByTitle(_booksRepository))
+                .SetNext(new ListBooksByCategory(_booksRepository))
+                .SetNext(new ListBooksByType(_booksRepository));
 
             return listBooks;
         }
