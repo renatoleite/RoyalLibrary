@@ -1,0 +1,39 @@
+version: "3.4"
+
+networks:
+  my-bridge-network:
+    driver: bridge
+
+services:
+  mssql:
+    image: mcr.microsoft.com/mssql/server:latest
+    container_name: mssql-server
+    environment:
+      - SA_PASSWORD=Pass@word
+      - ACCEPT_EULA=Y
+    networks:
+        - my-bridge-network
+    ports:
+      - "1433:1433"
+    volumes:
+      - "./src/Infrastructure/DataAccess//SqlServer/DLL:/scripts/"
+    command:
+      - /bin/bash
+      - -c
+      - |
+        /opt/mssql/bin/sqlservr &
+        sleep 15
+        /opt/mssql-tools/bin/sqlcmd -U sa -P Pass@word -l 30 -e -i /scripts/Init/MigrationScript_Down.sql
+        /opt/mssql-tools/bin/sqlcmd -U sa -P Pass@word -l 30 -e -i /scripts/Init/MigrationScript_Up.sql
+        sleep infinity
+  
+  royal-library:
+    image: ${DOCKER_REGISTRY-}royal-library
+    container_name: royal-library
+    build:
+      context: .
+      dockerfile: /src/WebApi/Dockerfile
+    ports: 
+      - "8090:80"
+    networks:
+      - my-bridge-network
