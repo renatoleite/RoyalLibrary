@@ -29,7 +29,7 @@ namespace Application.UseCases.ListBooksUseCase
             catch (Exception ex)
             {
                 _logger.LogError(ex, "{UseCase} - An unexpected error has occurred", nameof(ListBooksUseCase));
-                throw new Exception("An unexpected error has occurred");
+                throw;
             }
         }
 
